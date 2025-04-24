@@ -34,6 +34,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -53,7 +54,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialDesignTheme {
 
-                LazyRowStatikPage()
+                LazyRowDynamicPage()
                 }
             }
         }
@@ -63,9 +64,35 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     MaterialDesignTheme {
-        LazyRowStatikPage()
+        LazyRowDynamicPage()
     }
 }
+@Composable
+fun LazyRowDynamicPage(){
+    val countryList=remember { mutableStateListOf("Türkiye","İtalya","Almanya","Japonya") }
+
+    LazyColumn {
+      items(
+          count = countryList.count(),
+          itemContent = {
+              val country=countryList[it]
+              Card(modifier = Modifier.padding(all = 5.dp).fillMaxWidth()) {
+                  Row (modifier = Modifier.fillMaxWidth().
+                  clickable{
+                      Log.e("List",country)
+                  }){
+                      Row (verticalAlignment = Alignment.CenterVertically,
+                          modifier = Modifier.padding(all = 10.dp)){
+                          Text(text = country, modifier = Modifier.padding(all = 5.dp))
+                      }
+                  }
+              }
+          }
+      )
+    }
+}
+
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
