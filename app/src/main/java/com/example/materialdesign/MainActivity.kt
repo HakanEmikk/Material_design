@@ -6,10 +6,19 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,11 +34,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.materialdesign.ui.theme.MaterialDesignTheme
 
@@ -40,7 +51,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialDesignTheme {
 
-                TopAppBarSearchPage()
+                CardPage()
                 }
             }
         }
@@ -50,9 +61,44 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     MaterialDesignTheme {
-        TopAppBarSearchPage()
+        CardPage()
     }
 }
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CardPage(){
+    Column(modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        ) {
+        Card(modifier = Modifier.padding(all = 10.dp).fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 10.dp
+            ),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.Blue
+            ),
+            shape = RoundedCornerShape(corner = CornerSize(16.dp)),
+            border = BorderStroke(2.dp,Color.Magenta)
+        ) {
+            Row(horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth().clickable{
+                    Log.e("Card","tıklandı")
+                }
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(all = 10.dp)
+                ) {
+                    Image(painter = painterResource(R.drawable.sunny_image),
+                        contentDescription = "")
+                    Text(text = "Güneş", color = Color.White, fontSize = 36.sp)
+                }
+            }
+        }
+    }
+
+}
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
