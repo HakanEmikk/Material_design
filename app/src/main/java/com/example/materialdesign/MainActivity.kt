@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialDesignTheme {
 
-                LazyColumnStatikPage()
+                LazyRowStatikPage()
                 }
             }
         }
@@ -62,9 +63,49 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     MaterialDesignTheme {
-        LazyColumnStatikPage()
+        LazyRowStatikPage()
     }
 }
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LazyRowStatikPage(){
+    LazyRow {
+        item {
+            Card(modifier = Modifier.padding(all = 5.dp).fillMaxWidth()) {
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth().clickable{
+                    Log.e("Güneş","Tıklandı")
+                }
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(all = 10.dp)) {
+                        Image(painter = painterResource(R.drawable.sunny_image),
+                            contentDescription = "")
+                        Text(text = "Güneş", modifier = Modifier.padding(all = 5.dp))
+                    }
+                }
+            }
+        }
+        item {
+            Card(modifier = Modifier.padding(all = 5.dp).fillMaxWidth()) {
+                Row(modifier = Modifier.clickable{
+                    Log.e("Güneş","Tıklandı")
+                }
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(all = 10.dp)) {
+                        Image(painter = painterResource(R.drawable.moon_image),
+                            contentDescription = "")
+                        Text(text = "Ay", modifier = Modifier.padding(all = 5.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
