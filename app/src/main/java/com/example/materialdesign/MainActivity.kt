@@ -26,6 +26,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialDesignTheme {
 
-                LazyRowDynamicPage()
+                LazyColumnDynamicPage()
                 }
             }
         }
@@ -64,11 +65,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     MaterialDesignTheme {
-        LazyRowDynamicPage()
+        LazyColumnDynamicPage()
     }
 }
 @Composable
-fun LazyRowDynamicPage(){
+fun LazyColumnDynamicPage(){
     val countryList=remember { mutableStateListOf("Türkiye","İtalya","Almanya","Japonya") }
 
     LazyColumn {
@@ -77,13 +78,23 @@ fun LazyRowDynamicPage(){
           itemContent = {
               val country=countryList[it]
               Card(modifier = Modifier.padding(all = 5.dp).fillMaxWidth()) {
-                  Row (modifier = Modifier.fillMaxWidth().
+                  Row (modifier = Modifier.
                   clickable{
                       Log.e("List",country)
                   }){
                       Row (verticalAlignment = Alignment.CenterVertically,
-                          modifier = Modifier.padding(all = 10.dp)){
-                          Text(text = country, modifier = Modifier.padding(all = 5.dp))
+                          horizontalArrangement = Arrangement.SpaceBetween,
+                          modifier = Modifier.padding(all = 10.dp).fillMaxWidth()){
+                          Text(text = country, modifier = Modifier.padding(all = 5.dp).clickable{
+                              Log.e("List","Text ile seçildi $country")
+                          })
+                          OutlinedButton(
+                              onClick = {
+                                  Log.e("List","buton ile seçildi $country")
+                              }
+                          ) {
+                              Text(text = "Ülke Seç")
+                          }
                       }
                   }
               }
